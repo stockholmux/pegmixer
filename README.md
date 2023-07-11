@@ -316,6 +316,12 @@ An example of creating a slide-in holder.
 
 ![a box that doesn't have sides](images/example-slide-in.png)
 
+### `samples/bottle.scad`
+
+An example of rounding off a solid and using `min_back_wall` for dimensions.
+
+![a holder for a can or bottle](images/example-bottle.png)
+
 ## Installation & usage
 
 This project requires use of the [BOSL2 Library](https://github.com/BelfrySCAD/BOSL2). You can add BOSL2 to your [OpenSCAD libraries](https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Libraries#Library_locations) or you can clone the repo directly into the directory.
