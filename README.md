@@ -316,6 +316,12 @@ An example of creating a slide-in holder.
 
 ![a box that doesn't have sides](images/example-slide-in.png)
 
+### `samples/paper-towel-holder.scad`
+
+An example showing a `solid` as a back plate for other geometry.
+
+![a paper towel holder](images/example-paper-towel.jpg)
+
 ## Installation & usage
 
 This project requires use of the [BOSL2 Library](https://github.com/BelfrySCAD/BOSL2). You can add BOSL2 to your [OpenSCAD libraries](https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Libraries#Library_locations) or you can clone the repo directly into the directory.
