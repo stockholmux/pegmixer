@@ -316,6 +316,14 @@ An example of creating a slide-in holder.
 
 ![a box that doesn't have sides](images/example-slide-in.png)
 
+
+### `samples/paper-towel-holder.scad`
+
+An example showing a `solid` as a back plate for other geometry.
+
+![a paper towel holder](images/example-paper-towel.jpg)
+
+
 ### `samples/bottle.scad`
 
 An example of rounding off a solid and using `min_back_wall` for dimensions.
