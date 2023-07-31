@@ -163,9 +163,10 @@ module box(
 
     frontwall_z_push = is_undef($front_wall_height) ? 0 : (dims.z-$front_wall_height)/2 + half_wall_thickness;
     
-    module translated_side_wall() 
-        left((dims.x + $wall_thickness)/2) 
-                side_wall();
+    module translated_side_wall()
+        if ($side_wall_height > 0) 
+            left((dims.x + $wall_thickness)/2) 
+                    side_wall();
     module translated_bottom() 
         down((dims.z + top_add_h) / 2) bottom_wall();
 
