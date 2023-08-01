@@ -158,13 +158,13 @@ module box(
                     chamfer= -chamfer_calculated
                 );
         }
-    
+    side_wall_height = is_undef($side_wall_height) ? dims.z : $side_wall_height;
     sidewall_z_push = is_undef($side_wall_height) ? 0 : (dims.z-$side_wall_height)/2 + half_wall_thickness;
 
     frontwall_z_push = is_undef($front_wall_height) ? 0 : (dims.z-$front_wall_height)/2 + half_wall_thickness;
     
     module translated_side_wall()
-        if ($side_wall_height > 0) 
+        if (side_wall_height > 0) 
             left((dims.x + $wall_thickness)/2) 
                     side_wall();
     module translated_bottom() 
