@@ -296,11 +296,12 @@ module default_peg_set()
 module _place_pegs() 
     tag("hooks")
         _hook_repeat(floor($x/$spacing))
-            if ($children == 0) {
-                default_peg_set();
-            } else {
-                children();
-            }
+            fwd($epsilon)
+                if ($children == 0) {
+                    default_peg_set();
+                } else {
+                    children();
+                }
 
 module alignment_peg()
     path_extrude2d(
