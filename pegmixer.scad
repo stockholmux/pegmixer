@@ -20,7 +20,9 @@ module pegmixer(
     extension_length_mul= 0.5,
 
     wall_thickness= 5,
-    chamfer_divide= 3
+    chamfer_divide= 3,
+
+    nth_skip = 1
 ) {
     $spacing = spacing;
     $hole_d = hole_d;
@@ -38,6 +40,8 @@ module pegmixer(
     $chamfer_divide= chamfer_divide;
 
     $epsilon= 0.01;
+
+    $nth_skip = nth_skip;
 
     children(0);
 };
@@ -213,7 +217,6 @@ module _blank(dims, cube_tag= "preserve") {
                         position(peg_position) _place_pegs() children();
 
             } else {
-                echo("here", peg_position)
                 position(peg_position) _place_pegs() children();
             }
 }
@@ -427,8 +430,10 @@ module _hook_repeat(n)
         if (n>0) {
             translate([-(n-1) * $spacing/2, 0, 0])
                 for(i= [0:n-1])
-                    right(i * $spacing)
-                        children(0);
+                    if (i % $nth_skip == 0)
+                        right(i * $spacing)
+                            children(0);
+
         } else {
             children(0);
         }
