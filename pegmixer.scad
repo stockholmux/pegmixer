@@ -213,6 +213,7 @@ module _blank(dims, cube_tag= "preserve") {
                         position(peg_position) _place_pegs() children();
 
             } else {
+                echo("here", peg_position)
                 position(peg_position) _place_pegs() children();
             }
 }
@@ -244,6 +245,40 @@ module virtual(dims)
                 } else {
                     children();
                 }
+
+//'anchorify' is an awful sounding word.
+module anchorize(
+    //these are defaults for a m2 bolt and 1/4 pegboard
+    screw_d= 3,
+    screw_head_d= [7,6],
+    screw_head_h= 2,
+    shaft_reduce= 2,
+    shaft_reduce_length= 3,
+    split_w = 0.5,
+    length_add = 5
+) {
+    $anchor_screw_d = screw_d;
+
+    $anchor_screw_head_d = screw_head_d;
+    $anchor_screw_head_h = screw_head_h;
+
+    $anchor_shaft_reduce = shaft_reduce;
+    $anchor_shaft_reduce_length = shaft_reduce_length;
+    
+    $anchor_split_w = split_w;
+    $anchor_length_add = length_add;
+
+    difference() {
+        children(0);
+        children(1);
+    }
+}
+
+module anchor_screws(dims)
+    let(hidden_tag= "hide_cube")
+        hide(hidden_tag) 
+            _blank(dims, cube_tag= hidden_tag) 
+                anchor_screw_set(dims);
 
 module slingify_box(side_height,front_height) {
     $side_wall_height = is_undef(side_height) ? undef : side_height;
@@ -293,6 +328,34 @@ module default_peg_set()
         alignment_peg();
     };
 
+module anchor_peg_set()
+    hook_pair() {   
+        anchor_peg();
+        anchor_peg();
+    }
+
+module anchor_screw_set(dims)
+    let(
+        l = dims.y + ($epsilon*4)
+    )
+        translate([0, -dims.y/2, 0])
+            hook_pair() {
+                anchor_screw_hole(l);
+                anchor_screw_hole(l);
+            }
+
+module anchor_screw_hole(l)
+    let(
+        d1 = is_list($anchor_screw_head_d) ? $anchor_screw_head_d[1] : $anchor_screw_d,
+        d2 =  is_list($anchor_screw_head_d) ? $anchor_screw_head_d[0] : $anchor_screw_head_d,
+        fn = 30
+    )
+        rotate([90, 0, 0]) {
+            cylinder(d= $anchor_screw_d, h= l, $fn= fn, center= true);
+            translate([0, 0, -($anchor_screw_head_h - l)/2])
+                cylinder(d1= d1, d2= d2, h= $anchor_screw_head_h, $fn= fn, center= true);
+        }   
+
 module _place_pegs() 
     tag("hooks")
         _hook_repeat(floor($x/$spacing))
@@ -303,6 +366,40 @@ module _place_pegs()
                     children();
                 }
 
+module anchor_peg()
+    difference() {
+        path_extrude2d(
+            [
+                [0, 0],
+                [0, $board_thickness + $anchor_length_add ]
+            ]
+        )
+            if ($children == 0) {  
+                anchor_peg_profile(); 
+            } else { 
+                children(0); 
+            }
+        union() {
+            translate([0, -$epsilon, 0])
+                rotate([-90, 0, 0])
+                    cylinder(d= $anchor_screw_d, $fn=30, h= $board_thickness - $anchor_shaft_reduce  + ($epsilon*2));
+            translate(
+                [
+                    0, 
+                    $board_thickness - $anchor_shaft_reduce -  $epsilon, 
+                    0
+            ])
+                rotate([-90, 0, 0])
+                    cylinder(
+                        d1= $anchor_screw_d,
+                        d2= $anchor_screw_d - $anchor_shaft_reduce,
+                        $fn=30,
+                        h= $anchor_shaft_reduce_length + ($epsilon*2)
+                    );
+        }
+    }
+    
+
 module alignment_peg()
     path_extrude2d(
         [
@@ -311,7 +408,7 @@ module alignment_peg()
         ]
     )
        if ($children == 0) { 
-           flattened_peg_profile(); 
+            flattened_peg_profile();
         } else { 
             children(0); 
         }
@@ -340,6 +437,14 @@ module _hook_repeat(n)
 module flattened_peg_profile() 
      difference() {
         circle(d= $hole_d * $peg_hole_percentage, $fn= 20);
+        left($hole_d * $peg_flatten_percentage)
+            square($hole_d, center= true);
+    }
+
+module anchor_peg_profile() 
+    difference() {
+        circle(d= $hole_d * $peg_hole_percentage, $fn= 20);
+        square([$hole_d, $anchor_split_w], center= true);
         left($hole_d * $peg_flatten_percentage)
             square($hole_d, center= true);
     }

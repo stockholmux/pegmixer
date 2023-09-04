@@ -25,6 +25,14 @@ include <../pegmixer.scad>
     )
         box([30,20,40]);
 
-pegmixer()
+*pegmixer()
     box_bottom_hole([20,10])
         box([30,20,40]);
+
+pegmixer()
+    anchorize() {
+        solid([30,6,40])
+            anchor_peg_set();
+
+        anchor_screws([30,6,40]);
+    }
