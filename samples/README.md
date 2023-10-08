@@ -1,6 +1,6 @@
 # Pegmixer Samples
 
-This directory contains a number of small models that use pegmixer. 
+This directory contains a number of small models that use Pegmixer. 
 
 ### `samples/readme.scad`
 
@@ -63,3 +63,8 @@ A holder for the common iwiss IWS-3220M crimping tool. Uses a `bottomless` box.
 A holder for HS series crimper dies. It shows how to calculate a 2-tier "step". You can change the die capacity by altering `number_of_jaws`.
 
 ![a holder for a hs-series crimping tool dies](../images/example-hs-series-die-holder.png)
+
+## `samples/hs-series-crimper-holder.scad`
+
+This is the same as the readme example for `bottomless`.
+
