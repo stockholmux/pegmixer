@@ -302,55 +302,7 @@ Takes `s.z` and returns the height of the back wall.
 
 ## Other samples
 
-### `samples/readme.scad`
-
-Contains the examples for this document.
-
-### `samples/hex-bit.scad`
-
-A hex driver bit organizer implemented in Pegmixer
-
-![a hex bit pegboard organizer render](images/example-hex-bit.png)
-
-
-### `samples/hole.scad`
-
-A box with different style walls and a hole in the bottom.
-
-![a pegboard accessory box with a hole in the bottom](images/example-hole.png)
-
-
-### `samples/hook-on-hook.scad`
-
-An example of using `virtual` and custom hook profile.
-
-![a hook that hooks into a pegboard](images/example-hook-on-hook.png)
-
-### `samples/multimeter.scad`
-
-An example of cutting the front of a `box`
-
-![a box that holds a multimeter with dials on the front](images/example-multimeter.png)
-
-### `samples/slide-in.scad`
-
-An example of creating a slide-in holder.
-
-![a box that doesn't have sides](images/example-slide-in.png)
-
-
-### `samples/paper-towel-holder.scad`
-
-An example showing a `solid` as a back plate for other geometry.
-
-![a paper towel holder](images/example-paper-towel.jpg)
-
-
-### `samples/bottle.scad`
-
-An example of rounding off a solid and using `min_back_wall` for dimensions.
-
-![a holder for a can or bottle](images/example-bottle.png)
+See [/samples/README.md](./samples/README.md) for a number of samples that illustrate the use of Pegmixer in a variety ways.
 
 ## Installation & usage
 
