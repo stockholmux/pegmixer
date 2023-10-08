@@ -55,6 +55,8 @@ module box(
 
     chamfer_calculated= $wall_thickness/$chamfer_divide;
 
+    bottom_wall = is_undef($bottom_wall) ? true : $bottom_wall;
+    
     top_wall = is_undef($top_wall) ? false : $top_wall;
     top_add_h = top_wall ? $wall_thickness : 0;
 
@@ -129,7 +131,14 @@ module box(
         
     
     module back_wall()
-        cube([dims.x, $wall_thickness, back_wall_height(dims) + $wall_thickness + top_add_h ], center= true) {
+        // bottomless boxes need the back wall "pulled up" to create a smooth round over on the bottom edges
+        // the bottom edge is actually created by a $wall_thickness bottom wall
+        up(bottom_wall ? 0 : $wall_thickness/2)  
+        cube([
+            dims.x, 
+            $wall_thickness, 
+            back_wall_height(dims) + (bottom_wall ? $wall_thickness : 0)  + top_add_h
+        ], center= true) {
             position(BACK+TOP)
                 _hook_repeat(floor((dims.x + ($wall_thickness/2))/$spacing))
                     children(0);
@@ -140,7 +149,8 @@ module box(
             cuboid(
                 [
                     dims.x + side_wall_thickness,
-                    dims.y + $wall_thickness * 2,
+                    // bottomless boxes aren't actually bottomless, but have a narrow bottom wall
+                    bottom_wall ? dims.y + $wall_thickness * 2 : $wall_thickness,
                     $wall_thickness
                 ],
                 teardrop= true, 
@@ -178,12 +188,13 @@ module box(
         }
 
 
-        translated_bottom();
+        back(bottom_wall ? 0 : (dims.y + $wall_thickness) / 2) 
+            translated_bottom();
+            
         if (top_wall) mirror([0,0,1]) translated_bottom();
 
         down(frontwall_z_push)
             fwd((dims.y + $wall_thickness)/2) front_wall();
-    
     
         up((back_wall_height(dims) - dims.z) / 2) 
             back((dims.y + $wall_thickness) / 2) 
@@ -253,6 +264,11 @@ module slingify_box(side_height,front_height) {
 
 module box_bottom_hole(dims) {
     $bottom_hole = [dims.x, dims.y, $wall_thickness + ($epsilon*2)];
+    children();
+}
+
+module bottomless() {
+    $bottom_wall = false;
     children();
 }
 
