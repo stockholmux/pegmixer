@@ -189,6 +189,28 @@ pegmixer()
 ![A 30x20x40mm pegboard accessory with different sized walls](images/example-slingify.png)
 
 
+### `bottomless`
+- **parent**: `pegmixer`
+- **child**: `box`
+- **arguments**: none
+
+Any `box` created will lack a bottom. Useful if you need to hold something with a flared edge. This will correctly render rounded edges on the bottom compared to creating a `box_bottom_hole` with the same x/y dimensions as the opening.
+
+Example:
+
+```
+pegmixer()
+    bottomless()
+        box(
+            use_thinning= false, 
+            [65, 18.3, 40]
+        );
+```
+![A 65x18.3x40mm pegboard accessory without a bottom](images/example-bottomless.png)
+
+
+
+
 #### `box_bottom_hole`
 - **parent**: `pegmixer`
 - **child**: `box`
