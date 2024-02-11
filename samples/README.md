@@ -68,3 +68,8 @@ A holder for HS series crimper dies. It shows how to calculate a 2-tier "step". 
 
 This is the same as the readme example for `bottomless`.
 
+## `samples/caliper.scad`
+
+This mount is angled at the bottom so it prints without the need for supports under the pegs. It also illustrates using `hull` and `virtual` together to create a very minimal object
+
+![a mount for a Preciva caliper](../images/example-caliper.png)
